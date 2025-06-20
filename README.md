@@ -93,11 +93,3 @@ Edita `backend/configuracion/config.py` para personalizar:
 - soundfile, numpy, scipy, pydub
 - HTML5, JavaScript
 
-## Notas
-
-- El proyecto no es compatible con Python 3.13 por dependencias de audio.
-- Los directorios `uploads` y `temp` se crean automáticamente.
-
-## Licencia
-
-MIT
