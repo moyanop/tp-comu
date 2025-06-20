@@ -5,10 +5,10 @@ Sistema web para procesar, convertir y analizar archivos de audio usando FastAPI
 ## Características
 
 - Subida de archivos: Soporte para WAV, MP3, FLAC, OGG, M4A, WEBM
-- Conversión de audio: Cambio de frecuencia de muestreo y profundidad de bits
-- Análisis de audio: Visualización de forma de onda y espectro de frecuencia
+- Conversion de audio: Cambio de frecuencia de muestreo y profundidad de bits
+- Analisis de audio: Visualizacion de forma de onda y espectro de frecuencia
 - Descarga de archivos procesados
-- API REST con documentación automática
+- API REST con documentacian automatica
 
 ## Estructura del proyecto
 
@@ -16,7 +16,7 @@ Sistema web para procesar, convertir y analizar archivos de audio usando FastAPI
 tp-comu/
 ├── app.py                  # Punto de entrada principal
 ├── backend/                # Backend FastAPI
-│   ├── aplicacion.py       # Aplicación principal
+│   ├── aplicacion.py       # Aplicacion principal
 │   ├── configuracion/      # Configuración
 │   │   ├── __init__.py
 │   │   └── config.py
@@ -27,7 +27,7 @@ tp-comu/
 │   ├── modelo/             # Modelos y esquemas
 │   │   ├── __init__.py
 │   │   └── esquemas.py     # Esquemas Pydantic
-│   └── servicios/          # Lógica de negocio
+│   └── servicios/          # Logica de negocio
 │       ├── __init__.py
 │       └── servicio_audio.py
 ├── frontend/               # Frontend (HTML/JS)
@@ -36,8 +36,8 @@ tp-comu/
 │   │       └── visualizacion.js
 │   └── plantillas/
 │       └── principal.html
-├── uploads/                # Archivos subidos (se crea automáticamente)
-├── temp/                   # Archivos temporales (se crea automáticamente)
+├── uploads/                # Archivos subidos (se crea automaticamente)
+├── temp/                   # Archivos temporales (se crea automaticamente)
 ├── requirements.txt        # Dependencias Python
 └── README.md
 ```
@@ -62,17 +62,17 @@ tp-comu/
    ```bash
    python app.py
    ```
-4. Accede a la aplicación
+4. Accede a la aplicacion
    - Frontend: http://localhost:8000
    - Documentación API: http://localhost:8000/documentacion
    - Swagger UI: http://localhost:8000/docs
 
-## Configuración
+## Configuracion
 
 Edita `backend/configuracion/config.py` para personalizar:
 - Puerto del servidor
 - Formatos de audio soportados
-- Tamaño máximo de archivo
+- Tamaño maximo de archivo
 
 ## Endpoints principales
 
@@ -82,11 +82,11 @@ Edita `backend/configuracion/config.py` para personalizar:
 - `GET /api/audio/espectro/{archivo_id}` - Obtener espectro de frecuencia
 - `GET /api/audio/descargar/{archivo_id}` - Descargar archivo procesado
 - `DELETE /api/audio/limpiar/{archivo_id}` - Limpiar archivos temporales
-- `GET /` - Página principal
-- `GET /documentacion` - Documentación de la API
+- `GET /` - Pagina principal
+- `GET /documentacion` - Documentacion de la API
 - `GET /salud` - Verificar estado del servidor
 
-## Tecnologías utilizadas
+## Tecnologias utilizadas
 
 - FastAPI
 - Uvicorn
