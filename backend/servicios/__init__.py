@@ -1,1 +1,1 @@
-# Servicios de lógica de negocio 
+# Lógica de negocio 

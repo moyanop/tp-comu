@@ -7,14 +7,14 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import os
 
-# Configurar templates
+router = APIRouter()
+
+# Configuración de templates
 ruta_templates = os.path.join(os.path.dirname(__file__), "..", "..", "frontend", "plantillas")
 templates = Jinja2Templates(directory=ruta_templates)
 
-router = APIRouter()
-
 @router.get("/", response_class=HTMLResponse)
-async def pagina_principal(request: Request):
+def pagina_principal(request: Request):
     """
     Página principal de la aplicación
     """

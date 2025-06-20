@@ -23,12 +23,19 @@ class ServicioAudio:
     """Servicio para procesamiento de archivos de audio"""
     
     def __init__(self):
-        self.archivos_temporales = {}  # Almacena archivos en memoria por sesión
+        self.archivos_temporales = {}  # Archivos en memoria por sesión
     
-    def validar_archivo_audio(self, nombre_archivo: str) -> bool:
-        """Validar que el archivo sea un formato de audio permitido"""
-        extension = os.path.splitext(nombre_archivo.lower())[1]
-        return extension in config.FORMATOS_AUDIO_PERMITIDOS
+    def validar_archivo_audio(self, filename):
+        extension = os.path.splitext(filename)[1].lower()
+        return extension in [".wav", ".mp3", ".flac", ".ogg", ".m4a", ".webm"]
+    
+    def guardar_archivo_temporal(self, contenido, extension):
+        # Guarda el archivo en el directorio temporal
+        pass
+
+    def respuesta_procesamiento(self, archivo_id):
+        # Devuelve la respuesta con los datos del archivo procesado
+        pass
     
     def guardar_archivo_temporal(self, contenido: bytes, nombre_original: str) -> str:
         """

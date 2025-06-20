@@ -1,1 +1,1 @@
-# Configuración del sistema 
+# Configuración 

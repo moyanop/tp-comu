@@ -2,8 +2,8 @@
 Controlador para rutas de procesamiento de audio
 """
 
-from fastapi import APIRouter, UploadFile, File, HTTPException, Form
-from fastapi.responses import FileResponse
+from fastapi import APIRouter, UploadFile, File, HTTPException, Form, Query
+from fastapi.responses import FileResponse, JSONResponse
 from typing import Optional
 import os
 
@@ -28,10 +28,11 @@ async def subir_archivo_audio(audio: UploadFile = File(...)):
     """
     try:
         # Validar formato de archivo
-        if not servicio_audio.validar_archivo_audio(audio.filename):
+        extension = os.path.splitext(audio.filename)[1].lower()
+        if extension not in config.FORMATOS_AUDIO_PERMITIDOS:
             raise HTTPException(
                 status_code=400,
-                detail=f"Formato de archivo no permitido. Formatos válidos: {', '.join(['.wav', '.mp3', '.flac', '.ogg', '.m4a'])}"
+                detail=f"Formato de archivo no permitido. Formatos válidos: {', '.join(config.FORMATOS_AUDIO_PERMITIDOS)}"
             )
         
         # Leer contenido del archivo
@@ -45,12 +46,12 @@ async def subir_archivo_audio(audio: UploadFile = File(...)):
             )
         
         # Guardar archivo temporalmente
-        archivo_id = servicio_audio.guardar_archivo_temporal(contenido, audio.filename)
+        archivo_id = servicio_audio.guardar_archivo_temporal(contenido, extension)
         
         return RespuestaAudio(
             mensaje="Archivo subido correctamente",
             archivo_id=archivo_id,
-            formato=os.path.splitext(audio.filename)[1]
+            formato=extension
         )
         
     except Exception as e:
