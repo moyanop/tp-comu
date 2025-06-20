@@ -175,13 +175,3 @@ Si encuentras algún problema o tienes preguntas:
 1. Revisa la documentación de la API en `/documentacion`
 2. Verifica los logs del servidor
 3. Abre un issue en el repositorio
-
-## 🔄 Changelog
-
-### v1.0.0
-- Migración completa a FastAPI
-- Arquitectura MVC implementada
-- Soporte para múltiples formatos de audio
-- API REST documentada
-- Sistema de configuración simplificado
-- Ejecución simple con `python app.py` 
