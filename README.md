@@ -17,7 +17,7 @@ tp-comu/
 ├── app.py                  # Punto de entrada principal
 ├── backend/                # Backend FastAPI
 │   ├── aplicacion.py       # Aplicacion principal
-│   ├── configuracion/      # Configuración
+│   ├── configuracion/      # Configuracion
 │   │   ├── __init__.py
 │   │   └── config.py
 │   ├── controlador/        # Routers
@@ -92,9 +92,3 @@ Edita `backend/configuracion/config.py` para personalizar:
 - Uvicorn
 - soundfile, numpy, scipy, pydub
 - HTML5, JavaScript
-
-## Notas
-
-- El proyecto no es compatible con Python 3.13 por dependencias de audio.
-- Los directorios `uploads` y `temp` se crean automáticamente.
-
