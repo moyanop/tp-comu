@@ -2,11 +2,13 @@
 
 Sistema web para procesar, convertir y analizar archivos de audio usando FastAPI y Python.
 
-## Caracteristicas
+**Deploy APP** [https://tp-comu-production.up.railway.app/](https://tp-comu-production.up.railway.app/)
+
+## Características
 
 - Subida de archivos: Soporte para WAV, MP3, FLAC, OGG, M4A, WEBM
 - Conversión de audio: Cambio de frecuencia de muestreo y profundidad de bits
-- Analisis de audio: Visualización de forma de onda y espectro de frecuencia
+- Análisis de audio: Visualización de forma de onda y espectro de frecuencia
 - Descarga de archivos procesados
 - API REST
 
