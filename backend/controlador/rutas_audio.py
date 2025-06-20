@@ -15,26 +15,27 @@ from backend.modelo.esquemas import (
     DatosEspectro,
     RespuestaError
 )
+from backend.configuracion import config
 
 router = APIRouter()
 
 @router.post("/subir", response_model=RespuestaAudio)
-async def subir_archivo_audio(archivo: UploadFile = File(...)):
+async def subir_archivo_audio(audio: UploadFile = File(...)):
     """
     Subir archivo de audio para procesamiento
     
-    - **archivo**: Archivo de audio (WAV, MP3, FLAC, OGG, M4A)
+    - **audio**: Archivo de audio (WAV, MP3, FLAC, OGG, M4A)
     """
     try:
         # Validar formato de archivo
-        if not servicio_audio.validar_archivo_audio(archivo.filename):
+        if not servicio_audio.validar_archivo_audio(audio.filename):
             raise HTTPException(
                 status_code=400,
                 detail=f"Formato de archivo no permitido. Formatos válidos: {', '.join(['.wav', '.mp3', '.flac', '.ogg', '.m4a'])}"
             )
         
         # Leer contenido del archivo
-        contenido = await archivo.read()
+        contenido = await audio.read()
         
         # Validar tamaño del archivo
         if len(contenido) > 50 * 1024 * 1024:  # 50MB
@@ -44,22 +45,22 @@ async def subir_archivo_audio(archivo: UploadFile = File(...)):
             )
         
         # Guardar archivo temporalmente
-        archivo_id = servicio_audio.guardar_archivo_temporal(contenido, archivo.filename)
+        archivo_id = servicio_audio.guardar_archivo_temporal(contenido, audio.filename)
         
         return RespuestaAudio(
             mensaje="Archivo subido correctamente",
             archivo_id=archivo_id,
-            formato=os.path.splitext(archivo.filename)[1]
+            formato=os.path.splitext(audio.filename)[1]
         )
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error al subir archivo: {str(e)}")
 
-@router.post("/convertir", response_model=RespuestaAudio)
+@router.post("/convertir/{archivo_id}", response_model=RespuestaAudio)
 async def convertir_archivo_audio(
-    archivo_id: str = Form(...),
-    frecuencia_muestreo: int = Form(44100),
-    bits: int = Form(16)
+    archivo_id: str,
+    frecuencia_muestreo: int = Form(config.FRECUENCIA_MUESTREO_DEFAULT),
+    bits: int = Form(config.BITS_DEFAULT)
 ):
     """
     Convertir archivo de audio con nueva configuración

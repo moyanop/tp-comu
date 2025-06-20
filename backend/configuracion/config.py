@@ -17,8 +17,8 @@ DIRECTORIO_TEMPORALES = "temp"
 MAX_TAMANO_ARCHIVO = 50 * 1024 * 1024  # 50MB
 
 # Configuración de audio
-FORMATOS_AUDIO_PERMITIDOS = [".wav", ".mp3", ".flac", ".ogg", ".m4a"]
-FRECUENCIA_MUESTREO_DEFAULT = 44100
+FORMATOS_AUDIO_PERMITIDOS = [".wav", ".mp3", ".flac", ".ogg", ".m4a", ".webm"]
+FRECUENCIA_MUESTREO_DEFAULT = 40000
 BITS_DEFAULT = 16
 
 import os

@@ -10,7 +10,6 @@ import os
 
 from backend.controlador.rutas_audio import router as router_audio
 from backend.controlador.rutas_web import router as router_web
-from backend.configuracion.config import Configuracion
 
 # Crear instancia de FastAPI
 aplicacion = FastAPI(

@@ -1,6 +1,8 @@
 # Flask y dependencias web (compatible con Python 3.13)
 flask==2.3.3
 flask-cors==4.0.0
+fastapi==0.111.1
+uvicorn[standard]==0.30.3
 
 # Procesamiento de audio
 soundfile==0.13.1
@@ -9,4 +11,5 @@ scipy==1.15.3
 matplotlib==3.10.3
 
 # Utilidades
-aiofiles==23.2.1 
+aiofiles==23.2.1
+pydub==0.25.1 

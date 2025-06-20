@@ -10,7 +10,6 @@ import os
 # Agregar el directorio actual al path para que Python encuentre los módulos
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from backend.aplicacion import aplicacion
 from backend.configuracion.config import HOST, PUERTO, DEBUG
 
 if __name__ == "__main__":
@@ -23,7 +22,7 @@ if __name__ == "__main__":
     print("-" * 40)
     
     uvicorn.run(
-        aplicacion,
+        "backend.aplicacion:aplicacion",
         host=HOST,
         port=PUERTO,
         reload=DEBUG

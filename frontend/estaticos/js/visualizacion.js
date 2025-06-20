@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let mediaRecorder = null;
     let audioChunks = [];
     let blobGrabado = null;
+    let archivoIdActual = null; // Guardar ID del archivo subido
 
     // Grabación de audio
     btnGrabar.addEventListener('click', async function () {
@@ -62,6 +63,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Subir audio (grabado o cargado)
     formAudio.addEventListener('submit', async function (e) {
         e.preventDefault();
+        
+        // Ocultar reproductor convertido al subir nuevo audio
+        document.getElementById('app-reproductor-convertido').classList.add('d-none');
+        
         let archivo = inputAudio.files[0];
         if (!archivo && blobGrabado) {
             archivo = new File([blobGrabado], 'grabacion.webm', { type: 'audio/webm' });
@@ -80,7 +85,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const data = await resp.json();
         if (resp.ok) {
             mensajeAudio.textContent = data.mensaje;
+            archivoIdActual = data.archivo_id; // Guardar el ID
             await actualizarVisualizacion();
+            
+            // Actualizar y mostrar el reproductor de audio convertido
+            const appReproductor = document.getElementById('app-reproductor-convertido');
+            const audioPlayer = document.getElementById('audio-convertido-preview');
+            
+            // Se agrega un timestamp para evitar que el navegador use una versión en caché del audio
+            const audioUrl = `/api/audio/descargar/${archivoIdActual}?t=${new Date().getTime()}`;
+            
+            audioPlayer.src = audioUrl;
+            audioPlayer.load();
+            appReproductor.classList.remove('d-none');
+
         } else {
             mensajeAudio.textContent = data.error || 'Error al subir audio.';
         }
@@ -89,45 +107,81 @@ document.addEventListener('DOMContentLoaded', function () {
     // Convertir audio
     formConversion.addEventListener('submit', async function (e) {
         e.preventDefault();
-        const frecuencia = document.getElementById('frecuencia').value;
-        const bits = document.getElementById('bits').value;
-        mensajeConversion.textContent = 'Convirtiendo...';
-        const resp = await fetch('/api/audio/convertir', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ frecuencia, bits })
-        });
-        const data = await resp.json();
-        if (resp.ok) {
-            mensajeConversion.textContent = data.mensaje;
-            await actualizarVisualizacion();
-        } else {
-            mensajeConversion.textContent = data.error || 'Error al convertir.';
+        if (!archivoIdActual) {
+            mensajeConversion.textContent = 'Primero debes subir un archivo.';
+            return;
+        }
+
+        try {
+            const frecuencia = document.getElementById('frecuencia').value;
+            const bits = document.getElementById('bits').value;
+            
+            const formData = new FormData();
+            formData.append('frecuencia_muestreo', frecuencia);
+            formData.append('bits', bits);
+
+            mensajeConversion.textContent = 'Convirtiendo...';
+            const resp = await fetch(`/api/audio/convertir/${archivoIdActual}`, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await resp.json();
+
+            if (resp.ok) {
+                mensajeConversion.textContent = data.mensaje;
+                archivoIdActual = data.archivo_id; 
+                await actualizarVisualizacion();
+
+                // Actualizar y mostrar el reproductor de audio convertido
+                const appReproductor = document.getElementById('app-reproductor-convertido');
+                const audioPlayer = document.getElementById('audio-convertido-preview');
+                
+                // Se agrega un timestamp para evitar que el navegador use una versión en caché del audio
+                const audioUrl = `/api/audio/descargar/${archivoIdActual}?t=${new Date().getTime()}`;
+                
+                audioPlayer.src = audioUrl;
+                audioPlayer.load();
+                appReproductor.classList.remove('d-none');
+
+            } else {
+                // Muestra un error más detallado del servidor
+                mensajeConversion.textContent = `Error del servidor: ${data.detail || data.error || 'Error desconocido.'}`;
+            }
+        } catch (error) {
+            // Muestra errores de red o del script
+            console.error('Error en la función de conversión:', error);
+            mensajeConversion.textContent = `Error de conexión o en el script: ${error.message}`;
         }
     });
 
     // Descargar audio procesado
     btnDescargar.addEventListener('click', function (e) {
-        e.preventDefault();
-        btnDescargar.href = '/api/audio/descargar';
-        // El atributo download ya está puesto
+        if (!archivoIdActual) {
+            e.preventDefault();
+            alert('No hay un archivo procesado para descargar. Sube y convierte un audio primero.');
+            return;
+        }
+        btnDescargar.href = `/api/audio/descargar/${archivoIdActual}`;
     });
 
     // Visualización de forma de onda y espectro
     async function actualizarVisualizacion() {
+        if (!archivoIdActual) return;
+
         // Forma de onda
-        const respOnda = await fetch('/api/audio/forma_onda');
+        const respOnda = await fetch(`/api/audio/forma-onda/${archivoIdActual}`);
         const dataOnda = await respOnda.json();
-        if (respOnda.ok && dataOnda.forma_onda) {
-            graficarFormaOnda(dataOnda.forma_onda);
+        if (respOnda.ok && dataOnda.muestras) {
+            graficarFormaOnda(dataOnda.muestras);
         } else {
             graficarFormaOnda([]);
         }
         // Espectro
-        const respEspectro = await fetch('/api/audio/espectro');
+        const respEspectro = await fetch(`/api/audio/espectro/${archivoIdActual}`);
         const dataEspectro = await respEspectro.json();
-        if (respEspectro.ok && dataEspectro.espectro) {
-            graficarEspectro(dataEspectro.espectro);
+        if (respEspectro.ok && dataEspectro.magnitudes) {
+            graficarEspectro(dataEspectro.magnitudes);
         } else {
             graficarEspectro([]);
         }
