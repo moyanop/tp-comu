@@ -2,11 +2,11 @@
 
 Sistema web para procesar, convertir y analizar archivos de audio usando FastAPI y Python.
 
-## Características
+## Caracteristicas
 
 - Subida de archivos: Soporte para WAV, MP3, FLAC, OGG, M4A, WEBM
 - Conversión de audio: Cambio de frecuencia de muestreo y profundidad de bits
-- Análisis de audio: Visualización de forma de onda y espectro de frecuencia
+- Analisis de audio: Visualización de forma de onda y espectro de frecuencia
 - Descarga de archivos procesados
 - API REST
 
@@ -16,8 +16,8 @@ Sistema web para procesar, convertir y analizar archivos de audio usando FastAPI
 tp-comu/
 ├── app.py                  # Punto de entrada principal
 ├── backend/                # Backend FastAPI
-│   ├── aplicacion.py       # Aplicación principal
-│   ├── configuracion/      # Configuración
+│   ├── aplicacion.py       # Aplicacion principal
+│   ├── configuracion/      # Configuracion
 │   │   ├── __init__.py
 │   │   └── config.py
 │   ├── controlador/        # Routers
@@ -27,7 +27,7 @@ tp-comu/
 │   ├── modelo/             # Modelos y esquemas
 │   │   ├── __init__.py
 │   │   └── esquemas.py     # Esquemas Pydantic
-│   └── servicios/          # Lógica de negocio
+│   └── servicios/          # Logica de negocio
 │       ├── __init__.py
 │       └── servicio_audio.py
 ├── frontend/               # Frontend (HTML/JS)
@@ -36,8 +36,8 @@ tp-comu/
 │   │       └── visualizacion.js
 │   └── plantillas/
 │       └── principal.html
-├── uploads/                # Archivos subidos (se crea automáticamente)
-├── temp/                   # Archivos temporales (se crea automáticamente)
+├── uploads/                # Archivos subidos (se crea automaticamente)
+├── temp/                   # Archivos temporales (se crea automaticamente)
 ├── requirements.txt        # Dependencias Python
 └── README.md
 ```
@@ -47,7 +47,7 @@ tp-comu/
 - Python 3.8 a 3.12 (no compatible con 3.13)
 - pip
 
-## Instalación
+## Instalacion
 
 1. Clona el repositorio
    ```bash
