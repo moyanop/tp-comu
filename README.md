@@ -8,7 +8,7 @@ Sistema web para procesar, convertir y analizar archivos de audio usando FastAPI
 - Conversión de audio: Cambio de frecuencia de muestreo y profundidad de bits
 - Análisis de audio: Visualización de forma de onda y espectro de frecuencia
 - Descarga de archivos procesados
-- API REST con documentación automática
+- API REST
 
 ## Estructura del proyecto
 
@@ -64,8 +64,6 @@ tp-comu/
    ```
 4. Accede a la aplicación
    - Frontend: http://localhost:8000
-   - Documentación API: http://localhost:8000/documentacion
-   - Swagger UI: http://localhost:8000/docs
 
 ## Configuración
 
@@ -83,7 +81,6 @@ Edita `backend/configuracion/config.py` para personalizar:
 - `GET /api/audio/descargar/{archivo_id}` - Descargar archivo procesado
 - `DELETE /api/audio/limpiar/{archivo_id}` - Limpiar archivos temporales
 - `GET /` - Página principal
-- `GET /documentacion` - Documentación de la API
 - `GET /salud` - Verificar estado del servidor
 
 ## Tecnologías utilizadas
@@ -92,12 +89,3 @@ Edita `backend/configuracion/config.py` para personalizar:
 - Uvicorn
 - soundfile, numpy, scipy, pydub
 - HTML5, JavaScript
-
-## Notas
-
-- El proyecto no es compatible con Python 3.13 por dependencias de audio.
-- Los directorios `uploads` y `temp` se crean automáticamente.
-
-## Licencia
-
-MIT
