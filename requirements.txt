@@ -1,6 +1,12 @@
-flask
-flask-cors
-pydub
-numpy
-scipy
-matplotlib 
+# Flask y dependencias web (compatible con Python 3.13)
+flask==2.3.3
+flask-cors==4.0.0
+
+# Procesamiento de audio
+soundfile==0.13.1
+numpy==2.3.0
+scipy==1.15.3
+matplotlib==3.10.3
+
+# Utilidades
+aiofiles==23.2.1 
