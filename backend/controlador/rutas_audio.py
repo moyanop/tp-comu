@@ -46,7 +46,7 @@ async def subir_archivo_audio(audio: UploadFile = File(...)):
             )
         
         # Guardar archivo temporalmente
-        archivo_id = servicio_audio.guardar_archivo_temporal(contenido, extension)
+        archivo_id = servicio_audio.guardar_archivo_temporal(contenido, audio.filename)
         
         return RespuestaAudio(
             mensaje="Archivo subido correctamente",
@@ -55,6 +55,9 @@ async def subir_archivo_audio(audio: UploadFile = File(...)):
         )
         
     except Exception as e:
+        print(f"Error detallado al subir archivo: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Error al subir archivo: {str(e)}")
 
 @router.post("/convertir/{archivo_id}", response_model=RespuestaAudio)
