@@ -8,7 +8,7 @@ VERSION = "1.0.0"
 DEBUG = True
 
 # Servidor
-HOST = "localhost"
+HOST = "0.0.0.0"
 PUERTO = 8000
 
 # Archivos
